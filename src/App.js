@@ -10,22 +10,22 @@ import './App.css';
 export default class App extends React.Component {
     constructor(props) {
         super(props);
+        //Khởi tạo state,
         this.state = {
             messages: [
-                {id: 1, userId: 0, userName: 'th', message: 'Hello'}
+                {id: 1, userId: 0, message: 'Hello'}
             ],
-            user: 1,
-            socket: null,
+            user: null,
         }
+        this.socket = null;
     }
-
+    //Connetct với server nodejs, thông qua socket.io
     componentWillMount() {
-        const socket = io('https://limitless-badlands-87304.herokuapp.com/');
-        this.setState({socket})
-        socket.on('id', res => this.setState({user: res}))
-        socket.on('newMessage', (response) => {this.newMessage(response)});
+        this.socket = io('localhost:6969');
+        this.socket.on('id', res => this.setState({user: res})) // lắng nghe event có tên 'id'
+        this.socket.on('newMessage', (response) => {this.newMessage(response)}); //lắng nghe event 'newMessage' và gọi hàm newMessage khi có event
     }
-
+    //Khi có tin nhắn mới, sẽ push tin nhắn vào state mesgages, và nó sẽ được render ra màn hình
     newMessage(m) {
         const messages = this.state.messages;
         let ids = _map(messages, 'id');
@@ -33,14 +33,13 @@ export default class App extends React.Component {
         messages.push({
             id: max+1,
             userId: m.id,
-            userName: 'thắng',
             message: m.data
         });
 
         let objMessage = $('.messages');
         if (objMessage[0].scrollHeight - objMessage[0].scrollTop === objMessage[0].clientHeight ) {
             this.setState({messages});
-            objMessage.animate({ scrollTop: objMessage.prop('scrollHeight') }, 300);
+            objMessage.animate({ scrollTop: objMessage.prop('scrollHeight') }, 300); //tạo hiệu ứng cuộn khi có tin nhắn mới
 
         } else {
             this.setState({messages});
@@ -49,34 +48,14 @@ export default class App extends React.Component {
             }
         }
     }
-
+    //Gửi event socket newMessage với dữ liệu là nội dung tin nhắn
     sendnewMessage(m) {
         if (m.value) {
-            this.state.socket.emit("newMessage", m.value);
-            m.value = "";
+            this.socket.emit("newMessage", m.value); //gửi event về server
+            m.value = ""; 
         }
     }
 
-    componentDidUpdate() {
-        if (this.state.typing) {
-            if (true) {}
-        }
-    }
-
-    typing(data) {
-        if (data) {
-            let objMessage = $('.messages');
-            if (objMessage[0].scrollHeight - objMessage[0].scrollTop === objMessage[0].clientHeight) {
-                this.setState({typing: data});
-                objMessage.animate({ scrollTop: objMessage.prop('scrollHeight') }, 300);
-            } else {
-                this.setState({typing: data});
-            }
-        } else {
-            this.setState({typing: false})
-        }
-
-    }
     render () {
         return (
            <div className="app__content">
