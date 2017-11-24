@@ -11,7 +11,7 @@ body {
   position: absolute;
   width: calc(100% - 20px);
   max-width: 800px;
-  height: 500px;
+  height: 100%;
   border-radius: 10px;
   background-color: #fff;
   left: 50%;
@@ -20,6 +20,7 @@ body {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
   background-color: #f8f8f8;
   overflow: hidden;
+  max-height: 600px;
 }
 
 .top_menu {
@@ -60,7 +61,7 @@ body {
   list-style: none;
   padding: 20px 10px 0 10px;
   margin: 0;
-  max-height: 500px;
+  height: calc(100% - 100px);
   overflow: auto;
 }
 .messages .message {
@@ -93,6 +94,7 @@ body {
   background-color: #c7eafc;
   margin-right: 20px;
   float: right;
+  text-align: right;
 }
 .messages .message.right .text_wrapper::after, .messages .message.right .text_wrapper::before {
   left: 100%;
@@ -112,7 +114,7 @@ body {
 }
 .messages .message .text_wrapper {
   display: inline-block;
-  padding: 20px;
+  padding: 0px 20px 20px 20px;
   border-radius: 6px;
   width: calc(100% - 85px);
   min-width: 100px;
@@ -145,7 +147,6 @@ body {
   width: 100%;
   background-color: #fff;
   padding: 20px 20px;
-  position: absolute;
   bottom: 0;
 }
 .bottom_wrapper .message_input_wrapper {
@@ -192,4 +193,25 @@ body {
 
 .message_template {
   display: none;
+}
+.menu {
+  float: left;
+  width: 30%;
+  height: 100%;
+  border-right: 1px solid gray;
+}
+.content {
+  float: left;
+  width: 69%;
+  height: 100%;
+}
+.user {
+  color:  #45829b;
+  font-weight: bold;
+  font-size: 30px;
+  list-style: none;
+}
+.user-name {
+  font-size: 20px;
+  color: red;
 }
