@@ -2,6 +2,7 @@
   "name": "client",
   "version": "0.1.0",
   "private": true,
+  "hompage":"https://github.com/nguyentrangiavy/chat-client"
   "dependencies": {
     "jquery": "^3.2.1",
     "lodash": "^4.17.4",
